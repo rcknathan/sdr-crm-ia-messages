@@ -372,6 +372,69 @@ OPENAI_API_KEY=
 
 ---
 
+# Decisões Técnicas
+
+## Escolha do Banco de Dados
+
+O projeto utiliza PostgreSQL através do Supabase devido à necessidade de uma estrutura relacional consistente para gerenciamento de leads, campanhas, usuários e workspaces.
+
+A modelagem relacional foi escolhida porque o domínio do problema exige:
+
+- Relacionamentos entre entidades
+- Integridade de dados
+- Controle de permissões
+- Escalabilidade
+- Facilidade de consulta
+
+Além disso, o Supabase oferece integração nativa com:
+
+- Autenticação
+- Row Level Security (RLS)
+- Realtime
+- Edge Functions
+
+O que reduziu significativamente a complexidade de infraestrutura do projeto.
+
+---
+
+## Estrutura de Multi-Tenancy
+
+O sistema foi desenvolvido utilizando arquitetura multi-tenant baseada em workspaces.
+
+Cada organização possui:
+
+- Workspace próprio
+- Leads isolados
+- Campanhas isoladas
+- Controle de membros
+- Permissões independentes
+
+A separação dos dados foi implementada utilizando:
+
+- `workspace_id` em entidades relacionadas
+- Policies RLS no Supabase
+- Controle de membership por usuário
+
+Isso garante isolamento seguro entre organizações diferentes.
+
+---
+
+## Integração com LLM
+
+A integração com IA foi implementada utilizando:
+
+- OpenAI API
+- GPT-4.1-mini
+- Supabase Edge Functions
+
+A arquitetura escolhida separa frontend e processamento de IA através de uma camada serverless.
+
+Fluxo:
+
+```text
+Frontend → Edge Function → OpenAI API
+```
+
 # Considerações Finais
 
 O SDR CRM foi desenvolvido com foco em arquitetura moderna, experiência do usuário e integração inteligente utilizando IA.
