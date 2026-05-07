@@ -1,4 +1,4 @@
-# <a href="https://srdcrmapp.lovable.app">SDR CRM — Plataforma Inteligente de Gestão Comercial com IA</a>
+# <a href="https://srdcrmapp.lovable.app">SDR CRM — Plataforma Inteligente de Gestão Comercial com IA (ACESSE AQUI)</a>
 
 ## Visão Geral
 
