@@ -9,9 +9,33 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as LeadsRouteImport } from './routes/leads'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as CampaignsRouteImport } from './routes/campaigns'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiAiGenerateRouteImport } from './routes/api/ai/generate'
 
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LeadsRoute = LeadsRouteImport.update({
+  id: '/leads',
+  path: '/leads',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampaignsRoute = CampaignsRouteImport.update({
+  id: '/campaigns',
+  path: '/campaigns',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -25,32 +49,95 @@ const ApiAiGenerateRoute = ApiAiGenerateRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/campaigns': typeof CampaignsRoute
+  '/dashboard': typeof DashboardRoute
+  '/leads': typeof LeadsRoute
+  '/settings': typeof SettingsRoute
   '/api/ai/generate': typeof ApiAiGenerateRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/campaigns': typeof CampaignsRoute
+  '/dashboard': typeof DashboardRoute
+  '/leads': typeof LeadsRoute
+  '/settings': typeof SettingsRoute
   '/api/ai/generate': typeof ApiAiGenerateRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/campaigns': typeof CampaignsRoute
+  '/dashboard': typeof DashboardRoute
+  '/leads': typeof LeadsRoute
+  '/settings': typeof SettingsRoute
   '/api/ai/generate': typeof ApiAiGenerateRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/ai/generate'
+  fullPaths:
+    | '/'
+    | '/campaigns'
+    | '/dashboard'
+    | '/leads'
+    | '/settings'
+    | '/api/ai/generate'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/ai/generate'
-  id: '__root__' | '/' | '/api/ai/generate'
+  to:
+    | '/'
+    | '/campaigns'
+    | '/dashboard'
+    | '/leads'
+    | '/settings'
+    | '/api/ai/generate'
+  id:
+    | '__root__'
+    | '/'
+    | '/campaigns'
+    | '/dashboard'
+    | '/leads'
+    | '/settings'
+    | '/api/ai/generate'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CampaignsRoute: typeof CampaignsRoute
+  DashboardRoute: typeof DashboardRoute
+  LeadsRoute: typeof LeadsRoute
+  SettingsRoute: typeof SettingsRoute
   ApiAiGenerateRoute: typeof ApiAiGenerateRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/leads': {
+      id: '/leads'
+      path: '/leads'
+      fullPath: '/leads'
+      preLoaderRoute: typeof LeadsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/campaigns': {
+      id: '/campaigns'
+      path: '/campaigns'
+      fullPath: '/campaigns'
+      preLoaderRoute: typeof CampaignsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -70,6 +157,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CampaignsRoute: CampaignsRoute,
+  DashboardRoute: DashboardRoute,
+  LeadsRoute: LeadsRoute,
+  SettingsRoute: SettingsRoute,
   ApiAiGenerateRoute: ApiAiGenerateRoute,
 }
 export const routeTree = rootRouteImport

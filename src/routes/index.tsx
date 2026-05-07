@@ -1,26 +1,52 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { AuthForm } from "@/components/AuthForm";
+import { WorkspaceSetup } from "@/components/WorkspaceSetup";
+import { AuthProvider, useAuth } from "@/hooks/useAuth";
+import { WorkspaceProvider, useWorkspace } from "@/hooks/useWorkspace";
+import { useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: Index,
+  head: () => ({
+    meta: [
+      { title: "SDR CRM — Gerencie leads e gere mensagens com IA" },
+      { name: "description", content: "Mini CRM para equipes de pré-vendas (SDR) com geração de mensagens personalizadas por Inteligência Artificial." },
+    ],
+  }),
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
+function AppRouter() {
+  const { user, loading: authLoading } = useAuth();
+  const { currentWorkspace, loading: wsLoading } = useWorkspace();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!authLoading && user && !wsLoading && currentWorkspace) {
+      navigate({ to: "/dashboard" });
+    }
+  }, [authLoading, user, wsLoading, currentWorkspace, navigate]);
+
+  if (authLoading || (user && wsLoading)) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (!user) return <AuthForm />;
+  if (!currentWorkspace) return <WorkspaceSetup />;
+  return null;
 }
 
 function Index() {
-  return <PlaceholderIndex />;
+  return (
+    <AuthProvider>
+      <WorkspaceProvider>
+        <AppRouter />
+      </WorkspaceProvider>
+    </AuthProvider>
+  );
 }
