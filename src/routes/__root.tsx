@@ -74,13 +74,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
+      { title: "SDR CRM APP" },
       { name: "description", content: "SDR CRM — Mini CRM para equipes de pré-vendas com geração de mensagens IA" },
-      { property: "og:title", content: "SDR CRM" },
-      { property: "og:description", content: "Gerencie leads e gere mensagens personalizadas com IA" },
+      { property: "og:title", content: "SDR CRM APP" },
+      { property: "og:description", content: "SDR CRM — Mini CRM para equipes de pré-vendas com geração de mensagens IA" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "SDR CRM APP" },
+      { name: "twitter:description", content: "SDR CRM — Mini CRM para equipes de pré-vendas com geração de mensagens IA" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/31ef4d11-1aa1-4dc3-aecb-5baccb00f94e" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/31ef4d11-1aa1-4dc3-aecb-5baccb00f94e" },
     ],
     links: [
       {
