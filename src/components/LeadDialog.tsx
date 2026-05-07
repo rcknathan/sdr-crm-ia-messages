@@ -37,7 +37,10 @@ export function LeadDialog({ stageId, onClose, onSaved, initialData }: Props) {
 
   useEffect(() => {
     if (!currentWorkspace) return;
-    supabase.from("workspace_members").select("user_id, profiles(full_name, email)").eq("workspace_id", currentWorkspace.id).then(({ data }) => {
+    supabase.from("workspace_members")
+    .select("user_id")
+    .eq("workspace_id", currentWorkspace.id)
+    .then(({ data }) => {
       setMembers((data || []) as any);
     });
     supabase.from("custom_fields").select("*").eq("workspace_id", currentWorkspace.id).then(({ data }) => {
@@ -57,12 +60,15 @@ export function LeadDialog({ stageId, onClose, onSaved, initialData }: Props) {
     if (!currentWorkspace || !user) return;
     setLoading(true);
 
-    const leadData = {
-      ...form,
-      assigned_to: form.assigned_to || null,
-      workspace_id: currentWorkspace.id,
-      stage_id: stageId,
-    };
+  const leadData = {
+    ...form,
+    assigned_to:
+      form.assigned_to === "unassigned"
+        ? null
+        : form.assigned_to || null,
+    workspace_id: currentWorkspace.id,
+    stage_id: stageId,
+  };
 
     let leadId = initialData?.id;
     if (leadId) {
@@ -126,9 +132,11 @@ export function LeadDialog({ stageId, onClose, onSaved, initialData }: Props) {
             <Select value={form.assigned_to} onValueChange={(v) => setForm({ ...form, assigned_to: v })}>
               <SelectTrigger><SelectValue placeholder="Selecionar..." /></SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Nenhum</SelectItem>
+                <SelectItem value="unassigned">Nenhum</SelectItem>
                 {members.map((m) => (
-                  <SelectItem key={m.user_id} value={m.user_id}>{(m.profiles as any)?.full_name || (m.profiles as any)?.email || m.user_id}</SelectItem>
+                  <SelectItem key={m.user_id} value={m.user_id}>
+                    {m.user_id}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
