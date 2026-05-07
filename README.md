@@ -435,6 +435,112 @@ Fluxo:
 Frontend → Edge Function → OpenAI API
 ```
 
+Essa abordagem foi escolhida para:
+
+- Proteger a API Key
+- Centralizar lógica de IA
+- Facilitar manutenção
+- Permitir troca futura de provider LLM
+- Evitar exposição direta da OpenAI no frontend
+
+A geração das mensagens utiliza contexto do lead para produzir abordagens comerciais personalizadas.
+
+---
+
+# Desafios Encontrados
+
+Durante o desenvolvimento, diversos desafios técnicos foram encontrados e resolvidos.
+
+## Políticas RLS
+
+Inicialmente, políticas de Row Level Security impediam:
+
+- Criação de workspaces
+- Inserção de memberships
+- Leitura de registros
+
+As policies foram revisadas e ajustadas para garantir funcionamento correto mantendo segurança dos dados.
+
+---
+
+## Integração Frontend + Backend
+
+A implementação inicial utilizava chamadas locais:
+
+```ts
+fetch('/api/ai/generate')
+```
+
+Posteriormente, a arquitetura foi refatorada para utilizar Supabase Edge Functions, garantindo melhor separação entre frontend e backend.
+
+---
+
+## Problemas com Componentes Select
+
+Foi identificado um erro relacionado ao Radix UI:
+
+```text
+<Select.Item /> must have a value prop that is not an empty string
+```
+
+A lógica foi ajustada para tratar corretamente valores opcionais e estados vazios nos formulários.
+
+---
+
+## Tratamento de Estados e Requests
+
+Também foram tratados problemas envolvendo:
+
+- JSON inválido
+- Erros 403 e 400
+- Estado inconsistente no React
+- Requests assíncronas
+- Falhas de autenticação
+
+---
+
+# Funcionalidades Implementadas
+
+## Obrigatórias
+
+### Autenticação
+- [x] Login de usuários
+- [x] Controle de sessão
+- [x] Proteção de rotas
+
+### CRM
+- [x] Criação de leads
+- [x] Edição de leads
+- [x] Pipeline Kanban
+- [x] Gestão de campanhas
+
+### Banco de Dados
+- [x] Persistência de dados
+- [x] Estrutura relacional
+- [x] Multi-tenancy
+
+### IA
+- [x] Integração com OpenAI
+- [x] Geração automática de mensagens
+- [x] Processamento via Edge Functions
+
+### Deploy
+- [x] Aplicação publicada
+- [x] Backend funcional
+- [x] Integração frontend/backend
+
+---
+
+## Diferenciais
+
+- [x] Interface moderna e responsiva
+- [x] Integração real com IA
+- [x] Segurança com RLS
+- [x] Campos personalizados
+- [x] Estrutura escalável
+- [x] Arquitetura serverless
+- [x] Sistema preparado para expansão futura
+
 # Considerações Finais
 
 O SDR CRM foi desenvolvido com foco em arquitetura moderna, experiência do usuário e integração inteligente utilizando IA.
