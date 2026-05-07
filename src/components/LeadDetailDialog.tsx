@@ -53,14 +53,11 @@ export function LeadDetailDialog({ lead, onClose, onSaved }: Props) {
     const systemPrompt = `Você é um assistente de vendas. Gere 3 variações de mensagens de abordagem personalizadas para o lead abaixo, baseadas no contexto e instruções da campanha.\n\nContexto da campanha:\n${campaign.context || "Sem contexto"}\n\nInstruções (prompt):\n${campaign.prompt || "Gere mensagens de abordagem profissionais."}\n\nDados do lead:\n${leadInfo}\n\nGere exatamente 3 variações de mensagens. Separe cada variação com "---SEPARATOR---". Não inclua numeração nem prefixos.`;
 
     try {
-      const res = await fetch("/api/ai/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: systemPrompt }),
+      const { data, error } = await supabase.functions.invoke("generate-ai-message", {
+        body: { prompt: systemPrompt },
       });
-      const data = await res.json();
-      const text = data.text || "";
-      const variants = text.split("---SEPARATOR---").map((s: string) => s.trim()).filter(Boolean);
+      if (error) throw error;
+      const variants: string[] = data?.messages || [];
 
       // Delete old messages for this lead+campaign
       await supabase.from("generated_messages").delete().eq("lead_id", lead.id).eq("campaign_id", selectedCampaign);
