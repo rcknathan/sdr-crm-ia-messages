@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { AuthForm } from "@/components/AuthForm";
-import { WorkspaceSetup } from "@/components/WorkspaceSetup";
-import { AuthProvider, useAuth } from "@/hooks/useAuth";
-import { WorkspaceProvider, useWorkspace } from "@/hooks/useWorkspace";
+import { useAuth } from "@/hooks/useAuth";
+import { useWorkspace } from "@/hooks/useWorkspace";
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
+import { AuthForm } from "@/components/AuthForm";
+import { WorkspaceSetup } from "@/components/WorkspaceSetup";
 import { Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -17,7 +17,7 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-function AppRouter() {
+function Index() {
   const { user, loading: authLoading } = useAuth();
   const { currentWorkspace, loading: wsLoading } = useWorkspace();
   const navigate = useNavigate();
@@ -39,14 +39,4 @@ function AppRouter() {
   if (!user) return <AuthForm />;
   if (!currentWorkspace) return <WorkspaceSetup />;
   return null;
-}
-
-function Index() {
-  return (
-    <AuthProvider>
-      <WorkspaceProvider>
-        <AppRouter />
-      </WorkspaceProvider>
-    </AuthProvider>
-  );
 }
