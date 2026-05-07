@@ -1,5 +1,7 @@
 # <a href="https://srdcrmapp.lovable.app">SDR CRM — Plataforma Inteligente de Gestão Comercial com IA (ACESSE AQUI)</a>
 
+<a href="https://drive.google.com/drive/folders/1lGz8pw7N0GVTqRKNk84cg6MLZkWw0qrO?usp=sharing">VÍDEO DE APRESENTAÇÃO AQUI</a>
+
 ## Visão Geral
 
 O SDR CRM é uma plataforma moderna de gestão comercial desenvolvida para auxiliar equipes de prospecção, SDRs (Sales Development Representatives) e operações comerciais na organização de leads, campanhas e automação de mensagens utilizando Inteligência Artificial.
